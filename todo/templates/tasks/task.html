@@ -1,0 +1,29 @@
+<tr id="row-{{ task.id }}" class="task-item">
+    <td class="py-3">
+        <input class="form-check-input" type="checkbox" name="check_status" aria-label="Mark {{ task.title }} complete" {% if task.status %} checked {% endif %}
+        hx-post="{% url 'is_completed' task.id %}" hx-target="#row-{{ task.id }}" hx-swap="outerHTML">
+    </td>
+    <td colspan="2" class="py-3 text-start">
+        <span class="task-field text-start fw-semibold {% if task.status %} text-decoration-line-through {% endif %}{% if form.errors %} d-none{% endif %}">{{ task.title }}</span>
+        <input type="text" name="title" value="{% if form %}{{ form.title.value|default_if_none:'' }}{% else %}{{ task.title }}{% endif %}" maxlength="50" required class="form-control form-control-sm update-field task-title-input{% if not form.errors %} d-none{% endif %}{% if form.errors %} is-invalid{% endif %}" aria-describedby="task-title-error-{{ task.id }}" aria-invalid="{{ form.errors|yesno:'true,false' }}" hx-post="{% url 'update' task.id %}" hx-trigger="task-title-enter" hx-target="#row-{{ task.id }}" hx-swap="outerHTML">
+        <div id="task-title-error-{{ task.id }}" class="title-validation small text-danger{% if not form.errors %} d-none{% endif %}" aria-live="polite">{% if form.errors %}{{ form.title.errors.0 }}{% endif %}</div>
+    </td>
+    <td class="py-3 text-nowrap small text-secondary">{{ task.created_at }}</td>
+    <td class="py-3">
+        {% if task.status %}
+            <span class="badge rounded-pill text-bg-success px-3 py-2">Complete</span>
+        {% else %}
+            <span class="badge rounded-pill text-bg-danger px-3 py-2">Incomplete</span>
+        {% endif %}
+    </td>
+    <td class="py-3">
+        <div class="d-flex justify-content-center gap-2 flex-nowrap">
+            <button type="button"
+                    class="btn btn-sm btn-outline-primary px-3 update-btn updateBtn">Update</button>
+            <button type="button" class="btn btn-sm btn-outline-danger px-3" hx-delete="{% url 'delete' task.id %}"
+            hx-target="#row-{{ task.id }}"
+            hx-swap="outerHTML"
+            hx-confirm="Delete task? Are you sure?">Delete</button>
+        </div>
+    </td>
+</tr>

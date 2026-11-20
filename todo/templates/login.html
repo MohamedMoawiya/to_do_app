@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container  h-100 d-flex justify-content-center align-items-center">
+<form method="post" class="w-50 shadow-sm p-3">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="username">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="" required id="id_username">
+    </div>
+    
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="" required id="id_password">
+    </div>
+
+    <a href="{% url 'register' %}" class="d-block text-center mb-3 text-decoration-none text-secondary">Don't have an account?</a>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+</div>
+
+{% endblock %}
