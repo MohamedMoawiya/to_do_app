@@ -10,7 +10,7 @@
             </span>
             ToDo
         </a>
-        <a href="#" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-secondary p-2"
+        <a href="{% url 'index' %}" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-secondary p-2"
            aria-label="User profile">
             <i class="fa-solid fa-circle-user fa-lg" aria-hidden="true"></i>
         </a>
@@ -65,7 +65,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body pt-3">
-        <form hx-post="{% url 'add_task' %}" hx-target="#tasks-list" hx-swap="beforeend" method="post">
+        <form hx-post="{% url 'add_task' %}" hx-target="#tasks-list" hx-swap="beforeend" method="post" id="addTaskForm">
             {% csrf_token %}
             <label for="new-task-title" class="form-label fw-semibold">Task title</label>
             <input id="new-task-title" type="text" name="title" maxlength="50" class="form-control mb-1 task-title-input" aria-describedby="add-title-error" required>

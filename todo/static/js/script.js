@@ -48,7 +48,7 @@ document.addEventListener('invalid', function(event) {
         validateTaskTitle(event.target);
     }
 }, true);
-
+// update field validation
 document.body.addEventListener('htmx:beforeRequest', function(event) {
     const sender = event.detail.elt;
     const titleInput = sender.matches('.task-title-input')
@@ -63,7 +63,7 @@ document.body.addEventListener('htmx:beforeRequest', function(event) {
         event.preventDefault();
     }
 });
-
+// Update task handle
 document.addEventListener('keydown', function(event) {
     const input = event.target.closest('.update-field.task-title-input');
 
@@ -85,3 +85,21 @@ document.body.addEventListener('htmx:afterRequest', function(event) {
         delete input.dataset.updatePending;
     }
 });
+
+// Close Add Task Modal
+document.addEventListener('htmx:afterRequest', function(event){
+    console.log('running')
+    const form = document.getElementById('addTaskForm');
+
+    if(event.detail.elt === form && event.detail.successful){
+        const modalElement =document.getElementById('exampleModal');
+
+        const modal = bootstrap.Modal.getInstance(modalElement);
+
+        if(modal){
+            form.reset();
+            modal.hide();
+        }
+    }
+});
+
